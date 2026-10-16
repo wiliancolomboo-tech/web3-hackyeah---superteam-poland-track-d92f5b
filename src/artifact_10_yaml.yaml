@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  boreal-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: boreal-integration-service
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - SOLANA_WS_URL=wss://api.devnet.solana.com
+      - BOREAL_PROGRAM_ID=BoreAL1111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - ENTERPRISE_AUDIT_EMAIL=${ENTERPRISE_AUDIT_EMAIL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

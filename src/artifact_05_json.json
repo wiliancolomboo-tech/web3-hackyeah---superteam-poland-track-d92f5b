@@ -1,0 +1,28 @@
+{
+  "name": "boreal-integration-service",
+  "version": "1.0.0",
+  "description": "Enterprise event listener and invoice automation service for Boreal Protocol",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "cli": "ts-node src/cli.ts",
+    "test": "mocha -r ts-node/register 'tests/**/*.spec.ts' --timeout 60000"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/web3.js": "^1.95.3",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "^20.14.9",
+    "chai": "^4.3.7",
+    "mocha": "^10.7.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}

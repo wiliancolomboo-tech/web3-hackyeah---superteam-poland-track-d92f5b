@@ -1,0 +1,8 @@
++-------------------------------------------------------+
+               |                  BOREAL PROTOCOL                      |
+               |       Non-Custodial Milestone Settlement             |
+               +-------------------------------------------------------+
+                     |                                   |
+         [ Instant Settlement ]               [ Enterprise Telemetry ]
+         Sub-second finality via             Real-time invoice delivery
+         Solana SPL Token Vaults             via Resend & Slack Webhooks
