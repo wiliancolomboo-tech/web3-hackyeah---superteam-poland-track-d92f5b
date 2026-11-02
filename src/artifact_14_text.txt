@@ -1,0 +1,5 @@
+2/3 Why HuzarPay wins on Solana:
+🔒 Sub-second, non-custodial PDA vault security
+⏱️ Optimistic time-locks: Workers get paid automatically if clients go unresponsive
+⚖️ On-chain dispute resolution with arbiter basis-point splits
+📣 Real-time enterprise Slack & @resend webhooks

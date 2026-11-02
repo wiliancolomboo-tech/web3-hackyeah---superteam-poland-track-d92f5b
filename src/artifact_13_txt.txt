@@ -1,0 +1,6 @@
+=================================================
+   Vistula Autonomous Enterprise Event Relay     
+=================================================
+Connecting to WebSocket: wss://api.devnet.solana.com
+Monitoring Program: Vist111111111111111111111111111111111111111
+Real-time listener engaged. Waiting for on-chain events...

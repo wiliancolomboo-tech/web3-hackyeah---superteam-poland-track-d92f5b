@@ -1,0 +1,13 @@
+---
+
+# 6. Sponsor Handover & Turnkey Operations
+
+### 6.1 Quickstart & Deployment Runbook
+
+#### Prerequisites
+- Rust 1.79+
+- Solana CLI 1.18+
+- Anchor CLI 0.30.1
+- Node.js 20+ & Docker / Docker Compose
+
+#### Build & Deploy to Solana Devnet

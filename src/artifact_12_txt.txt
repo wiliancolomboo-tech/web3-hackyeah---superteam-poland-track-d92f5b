@@ -1,0 +1,5 @@
+Built for hackathon teams, DAOs, and Web3 enterprises scaling talent operations across Poland & beyond. 
+
+Code is 100% open-source, fully tested, and Docker-ready on @Solana devnet.
+
+Check out the code, run the Sentinel daemon, and let's automate Web3 work: github.com/superteam-poland/bramka-protocol 🚀🇵🇱 #Solana #SuperteamPoland #HackYeah

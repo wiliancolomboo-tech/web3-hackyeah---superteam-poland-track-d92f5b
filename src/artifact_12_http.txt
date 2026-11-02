@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "HEALTHY",
+  "protocol": "BursztynStream",
+  "network": "solana-devnet",
+  "latest_slot": 312049182,
+  "events_processed": 1420,
+  "slack_dispatches_ok": 1420,
+  "resend_invoices_ok": 1420,
+  "uptime_seconds": 86400
+}

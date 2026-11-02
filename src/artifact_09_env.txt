@@ -1,0 +1,8 @@
+# Solana Network Configuration
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=BSH1eLd8Kz9V13VfD7q1Pz9xN6eY3eW2pM1aB4c5D6e7
+
+# Enterprise Notifications (Resend & Slack)
+RESEND_API_KEY=re_123456789_abcdefghijklmnopqrstuvwxyz
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+ENTERPRISE_AP_EMAIL=accounts-payable@superteam.pl

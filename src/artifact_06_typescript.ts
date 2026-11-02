@@ -1,169 +1,238 @@
-import { Connection, PublicKey, Keypair } from "@solana/web3.js";
-import { Program, AnchorProvider, Wallet } from "@coral-xyz/anchor";
-import axios from "axios";
-import * as dotenv from "dotenv";
+import * as anchor from '@coral-xyz/anchor';
+import { Program } from '@coral-xyz/anchor';
+import { Amberguard } from '../target/types/amberguard';
+import {
+  TOKEN_PROGRAM_ID,
+  createMint,
+  createAccount,
+  mintTo,
+  getAccount,
+} from '@solana/spl-token';
+import { expect } from 'chai';
+import { Keypair, PublicKey } from '@solana/web3.js';
+import crypto from 'crypto';
 
-dotenv.config();
+describe('AmberGuard Settlement Core Tests', () => {
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
-const RPC_URL = process.env.SOLANA_RPC_URL || "http://127.0.0.1:8899";
-const WS_URL = process.env.SOLANA_WS_URL || "ws://127.0.0.1:8900";
-const PROGRAM_ID = new PublicKey(
-  process.env.BOREAL_PROGRAM_ID || "BoreAL1111111111111111111111111111111111111"
-);
-const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
-const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
-const ENTERPRISE_AUDIT_EMAIL = process.env.ENTERPRISE_AUDIT_EMAIL || "finance@corp-client.pl";
+  const program = anchor.workspace.Amberguard as Program<Amberguard>;
 
-// Minimal IDL definition for events
-const IDL: any = {
-  version: "0.1.0",
-  name: "boreal_escrow",
-  instructions: [],
-  events: [
-    {
-      name: "EscrowInitializedEvent",
-      fields: [
-        { name: "escrowId", type: "u64", index: false },
-        { name: "payer", type: "publicKey", index: false },
-        { name: "contractor", type: "publicKey", index: false },
-        { name: "arbiter", type: "publicKey", index: false },
-        { name: "amount", type: "u64", index: false },
-        { name: "deadline", type: "i64", index: false },
-      ],
-    },
-    {
-      name: "FundsReleasedEvent",
-      fields: [
-        { name: "escrowId", type: "u64", index: false },
-        { name: "contractor", type: "publicKey", index: false },
-        { name: "amount", type: "u64", index: false },
-        { name: "completedAt", type: "i64", index: false },
-      ],
-    },
-  ],
-};
+  const client = Keypair.generate();
+  const contractor = Keypair.generate();
+  const arbiter = Keypair.generate();
+  const attacker = Keypair.generate();
 
-export class BorealEnterpriseAgent {
-  private connection: Connection;
-  private program: Program;
+  let mint: PublicKey;
+  let clientAta: PublicKey;
+  let contractorAta: PublicKey;
+  let attackerAta: PublicKey;
 
-  constructor() {
-    this.connection = new Connection(RPC_URL, {
-      wsEndpoint: WS_URL,
-      commitment: "confirmed",
-    });
-    const dummyKeypair = Keypair.generate();
-    const provider = new AnchorProvider(
-      this.connection,
-      new Wallet(dummyKeypair),
-      { commitment: "confirmed" }
+  let escrowPda: PublicKey;
+  let vaultPda: PublicKey;
+  const escrowSeed = new anchor.BN(Date.now());
+  const totalAmount = new anchor.BN(10_000_000); // 10 tokens (with 6 decimals)
+  const challengeWindow = new anchor.BN(3600); // 1 hour
+  const milestoneCount = 2;
+  const dummyWorkHash = crypto.createHash('sha256').update('milestone_proof_v1').digest();
+  const dummyDescHash = crypto.createHash('sha256').update('contract_spec_v1').digest();
+
+  before(async () => {
+    // Airdrop SOL to test actors
+    for (const actor of [client, contractor, arbiter, attacker]) {
+      const sig = await provider.connection.requestAirdrop(actor.publicKey, 2 * anchor.web3.LAMPORTS_PER_SOL);
+      await provider.connection.confirmTransaction(sig);
+    }
+
+    // Create SPL Mint (simulating USDC/EURC)
+    mint = await createMint(
+      provider.connection,
+      client,
+      client.publicKey,
+      null,
+      6
     );
-    this.program = new Program(IDL, PROGRAM_ID, provider);
-  }
 
-  public async start(): Promise<void> {
-    console.log(`[Boreal-Agent] Starting listener on ${RPC_URL}`);
-    console.log(`[Boreal-Agent] Monitoring Program ID: ${PROGRAM_ID.toBase58()}`);
+    // Create Token Accounts
+    clientAta = await createAccount(provider.connection, client, mint, client.publicKey);
+    contractorAta = await createAccount(provider.connection, client, mint, contractor.publicKey);
+    attackerAta = await createAccount(provider.connection, attacker, mint, attacker.publicKey);
 
-    // Listen for On-Chain Escrow Initialization
-    this.program.addEventListener("EscrowInitializedEvent", async (event: any, slot: number) => {
-      console.log(`[EVENT] EscrowInitialized: ID #${event.escrowId.toString()} at slot ${slot}`);
-      await this.notifySlack(
-        `:lock: *Boreal Escrow Deposited* | Escrow ID #${event.escrowId.toString()}\n` +
-        `• Payer: \`${event.payer.toBase58()}\`\n` +
-        `• Amount: \`${(event.amount.toNumber() / 1_000_000).toFixed(2)} USDC/EURC\`\n` +
-        `• Deadline: ${new Date(event.deadline.toNumber() * 1000).toISOString()}`
-      );
-    });
+    // Mint funds to client
+    await mintTo(provider.connection, client, mint, clientAta, client.publicKey, 50_000_000);
 
-    // Listen for On-Chain Settlement Release
-    this.program.addEventListener("FundsReleasedEvent", async (event: any, slot: number) => {
-      console.log(`[EVENT] FundsReleased: ID #${event.escrowId.toString()} at slot ${slot}`);
-      const formattedAmount = (event.amount.toNumber() / 1_000_000).toFixed(2);
+    // Derive Escrow State and Vault PDAs
+    [escrowPda] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from('escrow_state'),
+        client.publicKey.toBuffer(),
+        escrowSeed.toArrayLike(Buffer, 'le', 8),
+      ],
+      program.programId
+    );
 
-      await Promise.all([
-        this.notifySlack(
-          `:white_check_mark: *Milestone Approved & Settled* | Escrow ID #${event.escrowId.toString()}\n` +
-          `• Recipient: \`${event.contractor.toBase58()}\`\n` +
-          `• Disbursed: \`${formattedAmount} USDC/EURC\`\n` +
-          `• Timestamp: ${new Date(event.completedAt.toNumber() * 1000).toISOString()}`
-        ),
-        this.sendResendInvoiceEmail({
-          escrowId: event.escrowId.toString(),
-          contractor: event.contractor.toBase58(),
-          amount: formattedAmount,
-          settledAt: new Date(event.completedAt.toNumber() * 1000).toISOString(),
-        }),
-      ]);
-    });
-  }
-
-  private async notifySlack(message: string): Promise<void> {
-    if (!SLACK_WEBHOOK_URL) {
-      console.log(`[Alert-Simulated] Slack: ${message}`);
-      return;
-    }
-    try {
-      await axios.post(SLACK_WEBHOOK_URL, { text: message });
-    } catch (err: any) {
-      console.error(`[Slack-Error] Failed to dispatch webhook:`, err.message);
-    }
-  }
-
-  private async sendResendInvoiceEmail(invoice: {
-    escrowId: string;
-    contractor: string;
-    amount: string;
-    settledAt: string;
-  }): Promise<void> {
-    if (!RESEND_API_KEY) {
-      console.log(`[Invoice-Simulated] Resend Email to ${ENTERPRISE_AUDIT_EMAIL}:`, invoice);
-      return;
-    }
-    try {
-      await axios.post(
-        "https://api.resend.com/emails",
-        {
-          from: "settlement@boreal.superteam.pl",
-          to: [ENTERPRISE_AUDIT_EMAIL],
-          subject: `[INVOICE ATTESTATION] Escrow #${invoice.escrowId} Settled`,
-          html: `
-            <div style="font-family: Arial, sans-serif; padding: 20px; color: #222;">
-              <h2>Boreal Protocol - Cryptographic Settlement Voucher</h2>
-              <p>This automated tax attestation confirms settlement completion on Solana.</p>
-              <hr/>
-              <table style="width: 100%; text-align: left;">
-                <tr><th>Escrow ID:</th><td>#${invoice.escrowId}</td></tr>
-                <tr><th>Recipient Address:</th><td><code>${invoice.contractor}</code></td></tr>
-                <tr><th>Net Disbursed:</th><td><strong>${invoice.amount} Token Units</strong></td></tr>
-                <tr><th>Settlement Finality:</th><td>${invoice.settledAt}</td></tr>
-              </table>
-              <hr/>
-              <p style="font-size: 12px; color: #777;">
-                Verified by Boreal Solana Core Engine. Compliant with EU electronic commercial proof regulations.
-              </p>
-            </div>
-          `,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${RESEND_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(`[Resend-Success] Invoice email dispatched for Escrow #${invoice.escrowId}`);
-    } catch (err: any) {
-      console.error(`[Resend-Error] Failed to send email invoice:`, err.response?.data || err.message);
-    }
-  }
-}
-
-// Headless runtime launch
-if (require.main === module) {
-  const agent = new BorealEnterpriseAgent();
-  agent.start().catch((err) => {
-    console.error("[Fatal-Agent-Crash]", err);
-    process.exit(1);
+    [vaultPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('vault'), escrowPda.toBuffer()],
+      program.programId
+    );
   });
-}
+
+  it('1. Successfully initializes the enterprise escrow PDA', async () => {
+    await program.methods
+      .initializeEscrow(
+        escrowSeed,
+        totalAmount,
+        challengeWindow,
+        milestoneCount,
+        Array.from(dummyDescHash)
+      )
+      .accounts({
+        client: client.publicKey,
+        contractor: contractor.publicKey,
+        arbiter: arbiter.publicKey,
+        mint: mint,
+        escrowState: escrowPda,
+        vault: vaultPda,
+        systemProgram: anchor.web3.SystemProgram.programId,
+        tokenProgram: TOKEN_PROGRAM_ID,
+        rent: anchor.web3.SYSVAR_RENT_PUBKEY,
+      })
+      .signers([client])
+      .rpc();
+
+    const escrowAccount = await program.account.escrowState.fetch(escrowPda);
+    expect(escrowAccount.client.toBase58()).to.equal(client.publicKey.toBase58());
+    expect(escrowAccount.contractor.toBase58()).to.equal(contractor.publicKey.toBase58());
+    expect(escrowAccount.totalAmount.toNumber()).to.equal(totalAmount.toNumber());
+    expect(escrowAccount.milestoneCount).to.equal(2);
+    expect(escrowAccount.currentMilestone).to.equal(0);
+  });
+
+  it('2. Client funds the escrow vault successfully', async () => {
+    await program.methods
+      .fundEscrow()
+      .accounts({
+        client: client.publicKey,
+        escrowState: escrowPda,
+        clientTokenAccount: clientAta,
+        vault: vaultPda,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .signers([client])
+      .rpc();
+
+    const vaultBalance = await getAccount(provider.connection, vaultPda);
+    expect(Number(vaultBalance.amount)).to.equal(totalAmount.toNumber());
+  });
+
+  it('3. Rejects milestone submission if not contractor (Unauthorized check)', async () => {
+    try {
+      await program.methods
+        .submitMilestone(Array.from(dummyWorkHash))
+        .accounts({
+          contractor: attacker.publicKey,
+          escrowState: escrowPda,
+        })
+        .signers([attacker])
+        .rpc();
+      expect.fail('Expected unauthorized submission to fail');
+    } catch (err: any) {
+      expect(err.error?.errorCode?.code || err.message).to.satisfy((c: string) =>
+        c.includes('Unauthorized') || c.includes('ConstraintRaw') || c.includes('has_one')
+      );
+    }
+  });
+
+  it('4. Contractor submits Milestone 1 with cryptographic proof', async () => {
+    await program.methods
+      .submitMilestone(Array.from(dummyWorkHash))
+      .accounts({
+        contractor: contractor.publicKey,
+        escrowState: escrowPda,
+      })
+      .signers([contractor])
+      .rpc();
+
+    const escrowAccount = await program.account.escrowState.fetch(escrowPda);
+    expect(Buffer.from(escrowAccount.milestoneWorkHash)).to.deep.equal(dummyWorkHash);
+  });
+
+  it('5. Client approves Milestone 1; releases 50% pro-rata tokens to contractor', async () => {
+    const preBalance = await getAccount(provider.connection, contractorAta);
+
+    await program.methods
+      .approveMilestone()
+      .accounts({
+        client: client.publicKey,
+        escrowState: escrowPda,
+        contractorTokenAccount: contractorAta,
+        vault: vaultPda,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .signers([client])
+      .rpc();
+
+    const postBalance = await getAccount(provider.connection, contractorAta);
+    const difference = Number(postBalance.amount) - Number(preBalance.amount);
+
+    expect(difference).to.equal(5_000_000); // 50% of 10M
+
+    const escrowAccount = await program.account.escrowState.fetch(escrowPda);
+    expect(escrowAccount.currentMilestone).to.equal(1);
+  });
+
+  it('6. Milestone 2: Contractor submits work and enters dispute scenario', async () => {
+    const dummyWorkHash2 = crypto.createHash('sha256').update('milestone_proof_v2').digest();
+    await program.methods
+      .submitMilestone(Array.from(dummyWorkHash2))
+      .accounts({
+        contractor: contractor.publicKey,
+        escrowState: escrowPda,
+      })
+      .signers([contractor])
+      .rpc();
+
+    // Client raises a dispute inside challenge window
+    const disputeReason = crypto.createHash('sha256').update('defective_deliverable').digest();
+    await program.methods
+      .raiseDispute(Array.from(disputeReason))
+      .accounts({
+        caller: client.publicKey,
+        escrowState: escrowPda,
+      })
+      .signers([client])
+      .rpc();
+
+    const escrowAccount = await program.account.escrowState.fetch(escrowPda);
+    expect(escrowAccount.state).to.deep.equal({ disputed: {} });
+  });
+
+  it('7. Arbiter resolves dispute with a 60/40 balance split', async () => {
+    const preContractorBalance = await getAccount(provider.connection, contractorAta);
+    const preClientBalance = await getAccount(provider.connection, clientAta);
+
+    // Arbiter grants 60% of remaining (5,000,000 * 0.60 = 3,000,000) to contractor
+    // and refunds remaining 40% (2,000,000) to client
+    await program.methods
+      .resolveDispute(6000) // 6000 bps = 60%
+      .accounts({
+        arbiter: arbiter.publicKey,
+        escrowState: escrowPda,
+        vault: vaultPda,
+        contractorTokenAccount: contractorAta,
+        clientTokenAccount: clientAta,
+        tokenProgram: TOKEN_PROGRAM_ID,
+      })
+      .signers([arbiter])
+      .rpc();
+
+    const postContractorBalance = await getAccount(provider.connection, contractorAta);
+    const postClientBalance = await getAccount(provider.connection, clientAta);
+
+    expect(Number(postContractorBalance.amount) - Number(preContractorBalance.amount)).to.equal(3_000_000);
+    expect(Number(postClientBalance.amount) - Number(preClientBalance.amount)).to.equal(2_000_000);
+
+    const escrowAccount = await program.account.escrowState.fetch(escrowPda);
+    expect(escrowAccount.state).to.deep.equal({ resolved: {} });
+  });
+});

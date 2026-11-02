@@ -1,0 +1,5 @@
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=V1ocE11111111111111111111111111111111111111
+RESEND_API_KEY=re_enterprise_test_key_xyz123
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+OPERATIONAL_EMAIL_TARGET=accounting@superteam.pl

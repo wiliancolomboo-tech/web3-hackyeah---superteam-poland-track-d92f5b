@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  zgoda-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zgoda-enterprise-daemon
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
+      - PROGRAM_ID=${PROGRAM_ID:-Zgoda11111111111111111111111111111111111111}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - FINANCE_NOTIFICATION_EMAIL=${FINANCE_NOTIFICATION_EMAIL:-treasury@enterprise-client.pl}
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

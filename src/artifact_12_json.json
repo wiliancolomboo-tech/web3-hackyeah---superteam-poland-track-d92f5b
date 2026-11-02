@@ -1,0 +1,10 @@
+{
+  "status": "healthy",
+  "programId": "Scribek4jT4sK4XgU5d5QhX5b6eG7o9Y4W2m3V1r111",
+  "rpcConnection": "active",
+  "wsLatencyMs": 14,
+  "processedStreamsCount": 420,
+  "lastProcessedSlot": 298410291,
+  "resendApiStatus": "operational",
+  "complianceEngine": "MiCA-JPK-Ready"
+}

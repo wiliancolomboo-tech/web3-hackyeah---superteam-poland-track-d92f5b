@@ -1,0 +1,13 @@
+{
+  "level": "info",
+  "timestamp": "2024-10-20T10:45:00.123Z",
+  "service": "krakflow-agent",
+  "event": "StreamWithdrawnEvent",
+  "streamId": "9942",
+  "amountLamports": 500000000,
+  "beneficiary": "Beni74V8kCj9kK...k4Gj",
+  "integrations": {
+    "slack": "SUCCESS_200",
+    "resend": "DELIVERED_re_88fbc2"
+  }
+}

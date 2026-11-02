@@ -1,0 +1,7 @@
+Twierdza is 100% open-source, fully tested with Anchor 0.30, and turnkey Dockerized for grant committees worldwide.
+
+Check out the code, run the test matrix, and verify on-chain:
+🔗 GitHub: https://github.com/superteam-poland-hackyeah/twierdza-protocol
+🔗 Devnet Explorer: https://solscan.io
+
+Dziękujemy @SuperteamPoland & @HackYeah! 🚀

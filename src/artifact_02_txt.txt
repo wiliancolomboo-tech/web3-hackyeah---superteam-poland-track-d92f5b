@@ -1,0 +1,14 @@
+[Uninitialized] 
+       │  initialize_escrow()
+       ▼
+ [Initialized / Funded]
+       │  submit_deliverable(sha256_hash)
+       ▼
+  [UnderReview] ──(Dispute Deadline Passed)──► claim_timeout_funds() ──► [Settled]
+       │                                                                      ▲
+       ├──► approve_and_settle() ─────────────────────────────────────────────┤
+       │                                                                      │
+       └──► raise_dispute()                                                   │
+                 │                                                            │
+                 ▼                                                            │
+            [Disputed] ──► resolve_dispute(split_ratio) ──────────────────────┘

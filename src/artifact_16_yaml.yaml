@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  ambershield-relayer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ambershield-relayer-prod
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - AMBERSHIELD_PROGRAM_ID=AmbSh1d111111111111111111111111111111111111
+      - RESEND_API_KEY=re_live_amber_shield_sample_secret_key
+      - SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+      - NOTIFICATION_RECIPIENT=devs@superteam.pl
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "node", "-e", "process.exit(0)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

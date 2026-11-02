@@ -1,0 +1,1 @@
+npx ts-node src/index.ts --backfill-slot=<LAST_PROCESSED_SLOT>

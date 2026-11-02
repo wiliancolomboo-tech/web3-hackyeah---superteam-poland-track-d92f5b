@@ -1,0 +1,30 @@
+# Multi-stage production container for the SolStream Sentinel Engine
+FROM node:20-alpine AS builder
+
+WORKDIR /usr/src/app
+
+COPY client/package*.json ./
+COPY client/tsconfig.json ./
+RUN npm ci
+
+COPY client/src/ ./src/
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+COPY client/package*.json ./
+RUN npm ci --only=production
+
+COPY --from=builder /usr/src/app/dist ./dist
+
+# Create non-root system user
+RUN addgroup -S sentinel && adduser -S sentinel -G sentinel
+USER sentinel
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD node -e "process.exit(0)" || exit 1
+
+ENTRYPOINT ["node", "dist/sentinelDaemon.js"]

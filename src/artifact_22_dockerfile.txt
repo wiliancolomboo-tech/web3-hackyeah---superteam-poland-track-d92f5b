@@ -1,0 +1,17 @@
+# Multi-stage production container for the SolVanguard Node daemon
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY client/package*.json client/tsconfig.json ./
+RUN npm ci
+COPY client/src ./src
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY client/package*.json ./
+RUN npm ci --only=production
+COPY --from=builder /app/dist ./dist
+
+USER node
+CMD ["node", "dist/worker.js"]

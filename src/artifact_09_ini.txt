@@ -1,0 +1,9 @@
+NODE_ENV=production
+SOLANA_RPC_URL=https://api.devnet.solana.com
+SOLANA_WS_URL=wss://api.devnet.solana.com
+PROGRAM_ID=Scribek4jT4sK4XgU5d5QhX5b6eG7o9Y4W2m3V1r111
+RESEND_API_KEY=re_live_enterprisepayrollkey_99481
+ENTERPRISE_ALERT_WEBHOOK=https://api.example.com/webhooks/alerts/placeholder
+NOTIFICATION_EMAIL_FROM=billing@solscribe.io
+NOTIFICATION_EMAIL_TO=operations@superteam.pl
+PORT=8080

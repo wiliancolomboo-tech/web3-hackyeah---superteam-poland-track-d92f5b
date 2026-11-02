@@ -1,0 +1,29 @@
+flowchart TD
+    subgraph Enterprise_Client["Enterprise Buyer / Client"]
+        A1[Web UI / ERP System] -->|1. Initialize Escrow & Deposit Vault| SC[AmberGuard Anchor Program on Solana]
+    end
+
+    subgraph Solana_Runtime["Solana L1 Core Runtime"]
+        SC -->|Derives PDA Vault| V[(Program Vault PDA: Escrow + SPL)]
+        SC -->|State Transition Event| EVT[Solana Event Logger]
+    end
+
+    subgraph Service_Provider["Contractor / Contributor"]
+        B1[Builder CLI / Agent] -->|2. Submit Milestone + IPFS Hash| SC
+    end
+
+    subgraph Governance_Arbitration["Arbiter / Legal Oracle"]
+        ARB[Certified Superteam Poland Arbiter] -.->|Resolve Dispute if Raised| SC
+    end
+
+    subgraph AmberGuard_Daemon["Enterprise Off-Chain Daemon & Automation Engine"]
+        EVT -->|WebSocket Account & Log Subscribe| WSS[Solana RPC Geyser / WSS Node]
+        WSS -->|Parse Anchor IDL Events| ORCH[Event Orchestrator & Deduplicator]
+        ORCH -->|Signed Payload Format| SINK1[Slack Enterprise Webhook Client]
+        ORCH -->|Transactional Receipt Dispatch| SINK2[Resend API Client]
+        ORCH -->|Auto-Release Trigger| CRON[Timeout Expiration Watchdog]
+    end
+
+    CRON -->|Trigger Auto-Approve on Client Ghosting| SC
+    SINK1 --> SLACK[#finance-ops Slack Channel]
+    SINK2 --> MAIL[Enterprise Email Inbox via Resend]

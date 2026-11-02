@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  kopernik-sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kopernik-enterprise-sentinel
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - SOLANA_WSS_URL=wss://api.devnet.solana.com
+      - PROGRAM_ID=Kop1111111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - AUDIT_EMAIL=finance-settlements@superteam.poland
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"

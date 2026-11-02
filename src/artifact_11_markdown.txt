@@ -1,0 +1,20 @@
+🧵 1/3
+Excited to unveil AnchorStream Enterprise for the @HackYeah & @SuperteamPoland Track! 🇵🇱⚡
+
+Cross-border CEE contractor payroll & B2B escrow is plagued by 3-5 day banking delays and 4% escrow fees. We brought continuous, second-by-second linear vesting & milestone tranching natively to @Solana.
+
+🧵 2/3
+Under the hood:
+⚡ Zero-unsafe Anchor 0.30.1 smart contract with deterministic PDA token vaults
+🛡️ Dual continuous streaming + verifiable milestone releases
+🔔 Real-time institutional telemetry piping settlement invoices straight to @resend & Slack
+🐳 1-click Dockerized daemon
+
+🧵 3/3
+With sub-second finality and sub-penny fees, AnchorStream bridges enterprise EU accounting into the Solana ecosystem.
+
+Built with passion at #HackYeah2024 for @SuperteamPoland.
+Code is 100% open-source & test-verified! 🚀
+
+GitHub: https://github.com/superteam-poland-hackyeah/anchor-stream-enterprise
+#Solana #SuperteamPoland #Web3 #Rust

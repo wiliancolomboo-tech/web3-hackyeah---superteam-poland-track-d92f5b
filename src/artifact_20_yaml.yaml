@@ -1,0 +1,26 @@
+# File: docker-compose.yml
+version: "3.8"
+
+services:
+  solshield-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solshield-event-daemon
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - RPC_HTTP_URL=https://api.devnet.solana.com
+      - RPC_WEBSOCKET_URL=wss://api.devnet.solana.com
+      - PROGRAM_ID=Shield1111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ENTERPRISE_AUDIT_EMAIL=${ENTERPRISE_AUDIT_EMAIL:-accounting@superteam.pl}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - LOG_LEVEL=info
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 3

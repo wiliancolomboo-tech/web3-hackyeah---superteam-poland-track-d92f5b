@@ -1,0 +1,18 @@
+1/3 🇵🇱 Built at @HackYeah for the @SuperteamPoland track: Meet AmberFlow ⚡ 
+
+The first non-custodial, MiCA-ready B2B invoice settlement & streaming milestone escrow engine natively on @solana. 
+
+Eliminating cross-border payment friction for EU Web3 companies. 🧵👇
+
+2/3 🛠️ Technical Highlights:
+• Zero-copy Anchor program escrowing SOL/SPL into deterministic PDAs
+• SHA-256 cryptographic invoice stamping (EU VAT/KSeF tax compliant)
+• Real-time enterprise dispatch engine triggering @resend receipts & Slack audit alerts
+• 100% test coverage with timelock protection
+
+3/3 🌐 Poland & CEE are powering the next wave of global Solana infrastructure. AmberFlow brings institutional treasury automation to builders today.
+
+Check out our open-source repo & turnkey Docker setup:
+🔗 github.com/amberflow/amberflow-protocol
+
+Special thanks to @HackYeah & @SuperteamPoland! 🚀🇵🇱 #Solana #SuperteamPoland #HackYeah2024

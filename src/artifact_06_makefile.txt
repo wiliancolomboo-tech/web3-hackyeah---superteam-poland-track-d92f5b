@@ -1,0 +1,23 @@
+.PHONY: build test deploy-devnet start-daemon docker-up
+
+build:
+	@echo "==> Building Anchor Solana Program"
+	anchor build
+
+test:
+	@echo "==> Running Full Test Suite on Localnet"
+	anchor test
+
+deploy-devnet:
+	@echo "==> Deploying AmberGuard to Solana Devnet"
+	solana config set --url https://api.devnet.solana.com
+	anchor build
+	solana program deploy target/deploy/amberguard.so --program-id target/deploy/amberguard-keypair.json
+
+start-daemon:
+	@echo "==> Starting TypeScript Relayer & Telemetry Worker"
+	cd services/relayer && npm install && npm run start
+
+docker-up:
+	@echo "==> Launching Orchestrated Multi-Container Stack"
+	docker compose up -d --build

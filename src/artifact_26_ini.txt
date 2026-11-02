@@ -1,0 +1,9 @@
+# Solana Configuration
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=VisTuLa111111111111111111111111111111111111
+
+# Enterprise Dispatch Rails
+RESEND_API_KEY=re_123456789abcdef012345678
+RESEND_FROM_EMAIL=treasury@vistula.network
+NOTIFICATION_EMAIL=accounting-ops@hackyeah.pl
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder

@@ -1,0 +1,7 @@
+Under the hood of Bramka:
+🔒 Non-custodial PDA Escrow engine written in Anchor
+⚡ Sub-second atomic releases upon milestone validation
+🧾 Automated enterprise invoicing via @resend & Slack alerts
+⚖️ Multi-party dispute arbitration & fund clawback
+
+Zero trust required. Real-time delivery. <$0.001 per disbursement.

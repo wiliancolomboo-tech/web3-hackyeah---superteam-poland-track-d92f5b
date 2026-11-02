@@ -1,0 +1,26 @@
+🧵 1/3
+Tired of 3-5 day cross-border SEPA settlement friction in Central Europe?
+
+We built @AmberPay on @Solana for the @HackYeah Superteam Poland Track 🇵🇱⚡
+
+An institutional, milestone-based B2B escrow protocol connecting Solana's sub-second finality with Polish KSeF e-invoicing compliance. 🧵👇
+
+---
+
+🧵 2/3
+How it works:
+1️⃣ PDA-based non-custodial milestone vaults
+2️⃣ KSeF e-invoice SHA-256 deliverable commitments
+3️⃣ Sub-second liquidity unlocks on proof submission
+4️⃣ Enterprise webhook dispatch (Resend + Slack) for zero-latency accounting
+
+Tested. Audited. 100% Rust & Anchor.
+
+---
+
+🧵 3/3
+CEE enterprises no longer need to choose between slow banking rails and opaque crypto tooling. AmberPay brings trustless enterprise settlement to Poland.
+
+Check out our full open-source repo & live Devnet contracts! 🚀
+
+Special thanks to @SuperteamPoland & @Solana for empowering builders at @HackYeah! 🇵🇱

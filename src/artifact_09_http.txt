@@ -1,0 +1,4 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{"status":"HEALTHY","solana_synced":true,"last_slot":284012948,"uptime_seconds":1420}

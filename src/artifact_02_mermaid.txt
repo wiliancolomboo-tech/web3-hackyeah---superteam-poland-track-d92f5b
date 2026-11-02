@@ -1,47 +1,46 @@
 flowchart TD
-    subgraph ClientLayer["Enterprise Clients & Actors"]
-        Payer["Enterprise Payer (Warsaw HQ)"]
-        Contractor["Service Provider / Contractor"]
-        Arbiter["Appointed Legal Arbiter"]
+    %% Roles
+    Client["Enterprise Client (Payer)"]
+    Contractor["Contractor / Dev Shop (Payee)"]
+    Arbiter["Designated Arbiter / Legal DAO"]
+    Sentinel["SolVanguard Sentinel Worker"]
+    Resend["Resend API Gateway"]
+    Slack["Enterprise Webhook (Slack/Discord)"]
+
+    %% On-Chain Subsystem
+    subgraph Solana_Cluster["Solana Blockchain (Mainnet-Beta / Devnet)"]
+        Program["SolVanguard Anchor Program"]
+        EscrowPDA["Escrow State PDA [b'escrow', client, seed]"]
+        VaultPDA["Token/SOL Vault PDA [b'vault', escrow]"]
+        EventBus["On-Chain Program Event Bus"]
     end
 
-    subgraph SolanaCore["Solana Blockchain (Anchor Engine)"]
-        Program["Boreal Escrow Program (boreal_escrow)"]
-        EscrowState["Escrow PDA Account\n(State Machine, Milestones, Hash)"]
-        VaultPDA["Vault Token Account\n(SPL USDC/EURC Escrow Vault)"]
+    %% Lifecycle Steps
+    Client -->|"1. initialize_escrow(milestones, arbiter, deadline)"| Program
+    Program -->|"Create & Init"| EscrowPDA
+    Client -->|"2. deposit_funds(amount)"| Program
+    Program -->|"Transfer Lamports/SPL"| VaultPDA
+
+    Contractor -->|"3. submit_milestone_proof(milestone_idx)"| Program
+    
+    alt Happy Path: Approval
+        Client -->|"4a. release_milestone(milestone_idx)"| Program
+        Program -->|"Transfer Milestone Share"| Contractor
+        Program -->|"Emit MilestoneReleasedEvent"| EventBus
+    else Dispute Path: Arbitration
+        Contractor -->|"4b. dispute_milestone(milestone_idx)"| Program
+        EscrowPDA -->|"State -> DISPUTED"| EscrowPDA
+        Program -->|"Emit DisputeOpenedEvent"| EventBus
+        Arbiter -->|"5. resolve_dispute(split_ratio_bps)"| Program
+        Program -->|"Disburse Arbiter Split"| VaultPDA
+        VaultPDA -->|"Disbursed to Client & Contractor"| Program
+        Program -->|"Emit DisputeResolvedEvent"| EventBus
     end
 
-    subgraph OffChainDaemon["Integration Daemon & Orchestrator"]
-        Watcher["Event Listener & Transaction Watcher\n(Solana WebSocket RPC)"]
-        InvoiceGen["Invoice Engine & Cryptographic Attestor"]
-        Dispatch["Webhook & Dispatch Controller"]
-    end
-
-    subgraph EnterpriseAPIs["Enterprise Communication & ERP"]
-        ResendAPI["Resend Transactional Email API\n(Invoice PDFs & Delivery Receipts)"]
-        SlackHook["Slack / Discord Treasury Webhook\n(#finance-settlements)"]
-    end
-
-    %% State Transitions
-    Payer -->|"1. initialize_escrow(funds, hash, deadline)"| Program
-    Program -->|"Create & Seed"| EscrowState
-    Program -->|"Transfer Tokens"| VaultPDA
-
-    Contractor -->|"2. submit_milestone(proof_cid)"| Program
-    Program -->|"Update Status: MilestoneSubmitted"| EscrowState
-
-    Payer -->|"3a. approve_and_release()"| Program
-    Program -->|"Transfer Checked via CPI"| VaultPDA
-    VaultPDA -->|"Disburse Funds"| Contractor
-
-    Payer -.->|"3b. raise_dispute()"| Program
-    Contractor -.->|"3b. raise_dispute()"| Program
-    Program -.->|"Update Status: Disputed"| EscrowState
-    Arbiter -.->|"4. resolve_dispute(split_bps)"| Program
-
-    %% Event Pipeline
-    Program --"Emit EscrowEvents"--> Watcher
-    Watcher -->|"Normalize Payload"| InvoiceGen
-    InvoiceGen -->|"Format Receipts"| Dispatch
-    Dispatch -->|"POST /emails"| ResendAPI
-    Dispatch -->|"POST /services/webhook"| SlackHook
+    %% Sentinel & Observability
+    EventBus -.->|"WebSocket logSubscribe / commitment: finalized"| Sentinel
+    Sentinel -->|"Validate Base64 Event Signature"| Sentinel
+    Sentinel -->|"Dispatch Audit Receipt (TLS 1.3)"| Resend
+    Sentinel -->|"Dispatch Operational Alert"| Slack
+    Resend -->|"Transactional PDF/Email"| Client
+    Resend -->|"Receipt Confirmation"| Contractor

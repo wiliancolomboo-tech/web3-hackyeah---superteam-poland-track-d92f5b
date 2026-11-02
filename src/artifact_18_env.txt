@@ -1,0 +1,8 @@
+SOLANA_RPC_URL=https://api.devnet.solana.com
+SOLANA_WS_URL=wss://api.devnet.solana.com
+PROGRAM_ID=Boreas1111111111111111111111111111111111111
+RESEND_API_KEY=re_enterprise_test_key_123456789
+RESEND_SENDER_EMAIL=notifications@boreas.finance
+ENTERPRISE_ALERT_EMAIL=treasury@superteam.poland
+OPS_DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+PORT=8080

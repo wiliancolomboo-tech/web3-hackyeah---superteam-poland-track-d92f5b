@@ -1,0 +1,14 @@
++----------------------------------------------------------------------------------------------------+
+|                                    OPERATIONAL INCIDENT PLAYBOOK                                   |
++----------------------+-----------------------------------------+-----------------------------------+
+| Event                | Trigger / Condition                     | Remediation Procedure             |
++----------------------+-----------------------------------------+-----------------------------------+
+| Suspicious Outflow   | Sudden velocity spikes near epoch cap   | Invoke set_emergency_pause(true)  |
+|                      |                                         | from Admin multi-sig within 1 tx. |
++----------------------+-----------------------------------------+-----------------------------------+
+| Priority Fee Surge   | Network congestion > 80% slot filling   | Adjust setComputeUnitPrice in     |
+|                      |                                         | orchestrator config dynamically.  |
++----------------------+-----------------------------------------+-----------------------------------+
+| RPC Provider Outage  | WebSocket disconnect > 3 retries        | Failover to backup RPC endpoint   |
+|                      |                                         | (e.g. Helius / Triton failover).  |
++----------------------+-----------------------------------------+-----------------------------------+

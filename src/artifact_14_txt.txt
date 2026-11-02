@@ -1,0 +1,9 @@
+Full open-source release for HackYeah 2024:
+✅ 100% Rust smart contract test coverage
+✅ Self-hosted 1-click Docker orchestration
+✅ Live Devnet deployment
+
+Building the future of sovereign enterprise finance in Poland & beyond with @SuperteamPoland. 🚀
+
+Github: https://github.com/superteam-poland/bursztyn-escrow
+#Solana #SuperteamPoland #HackYeah #Web3Enterprise

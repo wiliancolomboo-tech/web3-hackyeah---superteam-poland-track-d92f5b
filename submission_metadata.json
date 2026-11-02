@@ -1,0 +1,70 @@
+{
+  "deliverable_id": "superteam_d0b234d92f5b",
+  "opportunity_id": "st-4d3f8675-639a-476e-aa2c-c9cb49a1748c",
+  "platform": "SuperteamEarn",
+  "title": "HackYeah - Superteam Poland Track",
+  "url": "https://earn.superteam.fun/listings/bounty/hackyeah-superteam-poland-track",
+  "budget": "3,000 USDG",
+  "prize_amount": 3000.0,
+  "ecosystem": "Solana",
+  "github_url": "https://github.com/wiliancolomboo-tech/web3-hackyeah---superteam-poland-track-d92f5b",
+  "status": "validation_warning",
+  "validation_reports": [
+    {
+      "file": "artifact_01_mermaid.txt",
+      "language": "mermaid",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_02_toml.toml",
+      "language": "toml",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_03_rust.rs",
+      "language": "rust",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_04_json.json",
+      "language": "json",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_05_typescript.ts",
+      "language": "typescript",
+      "valid": false,
+      "error": "Unclosed bracket '{'"
+    },
+    {
+      "file": "artifact_06_typescript.ts",
+      "language": "typescript",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_07_bash.sh",
+      "language": "bash",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_08_dockerfile.txt",
+      "language": "dockerfile",
+      "valid": true,
+      "error": null
+    },
+    {
+      "file": "artifact_09_yaml.yaml",
+      "language": "yaml",
+      "valid": true,
+      "error": null
+    }
+  ],
+  "git_initialized": true,
+  "created_at": "2026-10-20 09:01:13"
+}

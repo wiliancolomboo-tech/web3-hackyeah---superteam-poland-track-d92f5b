@@ -1,0 +1,8 @@
+Zero-downtime, fully audited Anchor 0.30 contracts, and a complete Dockerized enterprise orchestration engine.
+
+Bringing compliant, institutional-grade invoice financing to Polish tech & logistics. 🇵🇱🚀
+
+Check the submission & live code:
+github.com/superteam-poland/kredyt-sol
+
+cc @SuperteamPoland @solana #Solana #HackYeah

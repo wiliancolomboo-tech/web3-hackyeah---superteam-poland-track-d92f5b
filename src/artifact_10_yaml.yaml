@@ -1,20 +1,20 @@
 version: "3.8"
 
 services:
-  boreal-daemon:
+  solvanguard-sentinel:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: boreal-integration-service
-    restart: unless-stopped
+    container_name: solvanguard-sentinel-daemon
+    restart: always
     environment:
       - NODE_ENV=production
-      - SOLANA_RPC_URL=https://api.devnet.solana.com
-      - SOLANA_WS_URL=wss://api.devnet.solana.com
-      - BOREAL_PROGRAM_ID=BoreAL1111111111111111111111111111111111111
+      - SOLANA_RPC_HTTP=https://api.devnet.solana.com
+      - SOLANA_RPC_WS=wss://api.devnet.solana.com
+      - PROGRAM_ID=Vangurd11111111111111111111111111111111111
       - RESEND_API_KEY=${RESEND_API_KEY}
-      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
-      - ENTERPRISE_AUDIT_EMAIL=${ENTERPRISE_AUDIT_EMAIL}
+      - ENTERPRISE_WEBHOOK_URL=${ENTERPRISE_WEBHOOK_URL}
+      - AUDIT_EMAIL_RECIPIENT=hackyeah-judges@superteam.fun
     logging:
       driver: "json-file"
       options:

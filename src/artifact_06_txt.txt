@@ -1,0 +1,14 @@
+---
+
+# 5. Comprehensive Test Suite & QA Matrix
+
+Complete Anchor integration test exercising the full lifecycle:
+1. Initialize escrow with 2 milestones.
+2. Contractor submits Milestone 0.
+3. Client approves and dispatches payment + protocol fee.
+4. Contractor submits Milestone 1.
+5. Client raises dispute.
+6. Arbiter arbitrates 60/40 split settlement.
+7. Verification of nonces, rent recovery, and permission violations.
+
+### `tests/solstream-escrow.ts`

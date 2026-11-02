@@ -1,0 +1,7 @@
+---
+
+# 6. Sponsor Handover & Turnkey Operations
+
+### 1-Click Dockerized Execution
+
+#### `Dockerfile`

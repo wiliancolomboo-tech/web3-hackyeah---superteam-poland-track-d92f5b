@@ -1,0 +1,7 @@
+{
+  "status": "healthy",
+  "programId": "Vist111111111111111111111111111111111111111",
+  "connectedRpc": "https://api.devnet.solana.com",
+  "syncedSlot": 298418291,
+  "uptimeSeconds": 86420
+}

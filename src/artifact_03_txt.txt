@@ -1,0 +1,28 @@
+SOLANA CLUSTER (Mainnet / Devnet)
+ ┌──────────────────────────────────────────────────────────────────┐
+ │  RPC Node (Solana WebSocket + JSON-RPC)                          │
+ │     │                                                            │
+ │     ├── [Program Account: AmberGuard Core Engine]                │
+ │     │      └── Instruction Handlers:                             │
+ │     │           • initialize_escrow                              │
+ │     │           • submit_deliverable                             │
+ │     │           • approve_and_release                            │
+ │     │           • dispute_escrow                                 │
+ │     │           • claim_timeout_clawback                         │
+ │     └── [PDA: Escrow Account + Escrow SPL Token Vault]           │
+ └────────────────────────────┬─────────────────────────────────────┘
+                              │ Account Change & Logs Subscribe
+                              ▼
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ AMBERGUARD ENTERPRISE WORKER / RELAYER SERVICE                   │
+ │                                                                  │
+ │   • @solana/web3.js + @coral-xyz/anchor Event Ingestion Engine   │
+ │   • Structured Event Parser & Reconnection Resiliency Engine     │
+ │   • Resend Transactional Email Adapter (RFC 822 compliant)       │
+ │   • Discord / Slack REST Webhook Dispatcher                      │
+ └────────────────────────────┬─────────────────────────────────────┘
+                              │
+               ┌──────────────┴──────────────┐
+               ▼                             ▼
+       [Resend Email API]          [Discord/Slack Webhook]
+    "Audit Proof #7701 Released"   "#hackyeah-bounty-settled"

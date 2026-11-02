@@ -1,0 +1,20 @@
+.PHONY: build test deploy start-worker logs clean
+
+build:
+	anchor build
+
+test:
+	anchor test
+
+deploy-devnet:
+	anchor deploy --provider.cluster devnet
+
+start-worker:
+	docker compose up -d --build
+
+logs:
+	docker compose logs -f vistula-daemon
+
+clean:
+	docker compose down -v
+	rm -rf target node_modules dist

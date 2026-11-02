@@ -1,0 +1,15 @@
+1/3 🦅 Introducing Kreska Protocol (@SuperteamPoland / @HackYeah) — The high-throughput milestone escrow & settlement engine native to @solana. 
+
+Eliminating payment counterparty risk for Web3 builders, grants, and enterprise contractors across the EU. 🇵🇱⚡
+
+2/3 Why Kreska?
+🔹 PDA Vault Security (Non-custodial, Zero-downtime)
+🔹 Bi-directional Milestone streaming with sub-second finality
+🔹 Multi-sig Dispute Resolution Quorums
+🔹 Real-time Enterprise Event Bridging: instant alerts to @resend, Discord & Slack webhooks
+
+3/3 Solana speed meets European commercial standards. Complete with 100% Anchor test coverage, Docker turnkey deployment, and sub-cent settlement costs.
+
+Built for the Polish Web3 ecosystem and beyond.
+GitHub & Live Devnet Demo: https://github.com/superteam-poland/kreska-protocol
+@Solana @SuperteamPoland #HackYeah #Solana #Superteam

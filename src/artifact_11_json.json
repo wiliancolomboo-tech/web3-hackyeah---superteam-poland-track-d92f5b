@@ -1,0 +1,9 @@
+{
+  "status": "HEALTHY",
+  "uptimeSeconds": 14201,
+  "cluster": "devnet",
+  "programId": "AmbFLow111111111111111111111111111111111111",
+  "wsSubscription": "ACTIVE",
+  "resendConnected": true,
+  "slackDispatcher": true
+}

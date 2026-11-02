@@ -1,0 +1,19 @@
+[package]
+name = "aura-protocol"
+version = "0.1.0"
+description = "AURA: Enterprise KSeF Invoice Factoring and Escrow Protocol on Solana"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "aura_protocol"
+
+[features]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+cpi = ["no-entrypoint"]
+default = []
+
+[dependencies]
+anchor-lang = { version = "0.30.1", features = ["init-if-needed"] }

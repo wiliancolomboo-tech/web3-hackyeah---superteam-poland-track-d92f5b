@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  solvanguard-sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solvanguard_sentinel
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - SOLANA_WS_URL=wss://api.devnet.solana.com
+      - PROGRAM_ID=Vangurd111111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ENTERPRISE_INVOICE_EMAIL=${ENTERPRISE_INVOICE_EMAIL}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

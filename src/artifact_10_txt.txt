@@ -1,0 +1,5 @@
+Thrilled to unveil Bramka Protocol for the @SuperteamPL track at #HackYeah2024! 🇵🇱⚡
+
+Web3 grants & bounties are broken: funders worry about delivery, builders stress about getting paid, and accounting hates manual payouts.
+
+We built an autonomous milestone escrow protocol on @Solana with real-time enterprise invoice automation. 🧵👇

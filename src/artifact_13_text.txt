@@ -1,0 +1,5 @@
+1/3 🇵🇱 Built at #HackYeah for @SuperteamPoland:
+
+Cross-border tech contracts across the CEE region are plagued by payment delays, unfair disputes, and hostage funds.
+
+Introducing HuzarPay (@HuzarProtocol): An enterprise-grade, optimistic milestone escrow and streaming engine on @Solana! ⚡🛡️

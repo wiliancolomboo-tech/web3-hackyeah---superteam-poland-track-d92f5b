@@ -1,0 +1,4 @@
+### Telemetry Health Check Matrix
+- **GET /health**: Returns `{ status: "UP", rpcLatencyMs: 38, slot: 29819281, resendActive: true }`
+- **RPC Failover Policy**: Configured with dual endpoints (Helius primary, Triton backup) with automatic 300ms circuit breaker.
+- **Multisig Control**: Program upgrade authority is transferred to Squads v4 Multisig with a 3-of-5 governance quorum before mainnet initialization.

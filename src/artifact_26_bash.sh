@@ -1,0 +1,1 @@
+solana ping --url https://api.devnet.solana.com

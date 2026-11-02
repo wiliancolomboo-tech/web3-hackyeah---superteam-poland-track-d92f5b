@@ -1,0 +1,17 @@
+1/3 🇵🇱 Built at HackYeah for @SuperteamPL: Meet Husar Protocol 🛡️
+
+Cross-border tech contracts between global DAOs & Polish talent shouldn't rely on Net-60 invoices or blind upfront deposits.
+
+We built an institutional milestone escrow & dynamic streaming engine on @solana. ⚡🧵👇
+
+2/3 ⚙️ Under the hood:
+• 100% Non-custodial PDA-derived token vaults
+• Granular milestone verification with cryptographic SHA-256 deliverable commits
+• Native multi-sig arbitration & dispute protection
+• Real-time off-chain Sentinel syncing with @resend & Discord/Slack webhooks! 🔔
+
+3/3 🏆 Husar Protocol makes CEE Europe's capital-efficient software export leader on #Solana.
+
+Fully open-source, Anchor 0.30 ready, with turnkey Dockerized sentinel daemons.
+
+Check the live demo & repository: github.com/superteam-poland/husar-protocol 🇵🇱🚀

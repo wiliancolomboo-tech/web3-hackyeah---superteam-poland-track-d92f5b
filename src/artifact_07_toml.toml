@@ -1,0 +1,22 @@
+[toolchain]
+
+[features]
+seeds = true
+skip-lint = false
+
+[programs.localnet]
+vistulapay_escrow = "Vist111111111111111111111111111111111111111"
+
+[programs.devnet]
+vistulapay_escrow = "Vist111111111111111111111111111111111111111"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-node node_modules/.bin/mocha -t 1000000 tests/**/*.ts"
+start = "yarn run ts-node src/agent/relayer.ts"

@@ -1,8 +1,10 @@
-+-------------------------------------------------------+
-               |                  BOREAL PROTOCOL                      |
-               |       Non-Custodial Milestone Settlement             |
-               +-------------------------------------------------------+
-                     |                                   |
-         [ Instant Settlement ]               [ Enterprise Telemetry ]
-         Sub-second finality via             Real-time invoice delivery
-         Solana SPL Token Vaults             via Resend & Slack Webhooks
++------------------------------------------------------------------------------------------------+
+|                                    SOLVANGUARD VALUE MATRIX                                    |
++--------------------------+------------------------------------+--------------------------------+
+| Metric                   | Legacy TradFi / CEE Escrow         | SolVanguard Protocol           |
++--------------------------+------------------------------------+--------------------------------+
+| Settlement Finality      | 72 - 120 Hours (SWIFT / SEPA Core) | 400 Milliseconds (Solana Slot) |
+| Transaction Overhead     | 3.5% - 6.0% + FX Spread            | < $0.0005 per settlement       |
+| Adjudication Governance  | Manual Court / 60+ Days Arbitration| On-Chain Multi-Role Arbiter PDA|
+| Enterprise Observability | Fragmented Manual PDFs             | Webhook/Resend Zero-Loss Loop  |
++--------------------------+------------------------------------+--------------------------------+

@@ -1,0 +1,9 @@
+# Solana Cluster Configuration
+SOLANA_RPC_HTTP=https://api.devnet.solana.com
+SOLANA_RPC_WS=wss://api.devnet.solana.com
+PROGRAM_ID=KRAK111111111111111111111111111111111111111
+
+# Enterprise Integrations
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+RESEND_API_KEY=re_enterprise_test_key_9942
+NOTIFICATION_EMAIL=treasury@superteam-poland.io

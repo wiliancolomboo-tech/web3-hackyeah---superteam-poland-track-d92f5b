@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  solstream-sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solstream-sentinel-daemon
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - SOLANA_WS_URL=wss://api.devnet.solana.com
+      - PROGRAM_ID=Sent1neL11111111111111111111111111111111111
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - SENDER_EMAIL=settlement@solstream.biz
+      - ALERT_RECIPIENT_EMAIL=audits@enterprise.com
+      - ENTERPRISE_WEBHOOK_URL=${ENTERPRISE_WEBHOOK_URL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"

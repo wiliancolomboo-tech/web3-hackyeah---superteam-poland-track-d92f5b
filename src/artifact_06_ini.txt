@@ -1,0 +1,10 @@
+# Solana Network Configuration
+SOLANA_RPC_URL=https://api.devnet.solana.com
+PROGRAM_ID=Hussar1111111111111111111111111111111111111
+ANCHOR_WALLET=./id.json
+
+# Enterprise Integrations
+RESEND_API_KEY=re_demo_1234567890abcdef
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+AUDIT_EMAIL=treasury@superteam.pl
+PORT=8080

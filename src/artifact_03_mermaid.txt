@@ -1,0 +1,27 @@
+flowchart TD
+    subgraph OnChain [Solana Mainnet / Devnet]
+        Prog[AmberShield Anchor Program]
+        PDA[Escrow Vault PDA]
+        State[Escrow Account State]
+        Prog -->|Controls| PDA
+        Prog -->|Mutates| State
+    end
+
+    subgraph Middleware [AmberShield Enterprise Daemon]
+        WS[WebSocket / RPC Subscription Engine]
+        Parser[Borsh Event Parser & State Validator]
+        Queue[Idempotency & Retry Engine]
+        WS --> Parser
+        Parser --> Queue
+    end
+
+    subgraph Integrations [Enterprise Downstream Endpoints]
+        ResendAPI[Resend API: VAT Invoicing & Receipts]
+        SlackHook[Slack/Discord Corporate Alert Webhooks]
+        AccountingDB[Enterprise Accounting / ERP Webhook]
+    end
+
+    Prog -.->|MilestoneReleased Event| WS
+    Queue -->|POST /emails| ResendAPI
+    Queue -->|POST /webhooks/milestone| SlackHook
+    Queue -->|POST /erp/sync| AccountingDB

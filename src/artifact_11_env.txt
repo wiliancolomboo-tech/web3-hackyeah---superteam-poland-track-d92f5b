@@ -1,0 +1,13 @@
+# Solana Configuration
+SOLANA_RPC_URL=https://api.devnet.solana.com
+SOLANA_WS_URL=wss://api.devnet.solana.com
+PROGRAM_ID=AmberkSef11111111111111111111111111111111111
+
+# Enterprise Resend API Key (Obtain from https://resend.com)
+RESEND_API_KEY=re_123456789abcdef
+
+# Accounting Notification Recipient
+NOTIFICATION_EMAIL_TO=treasury@superteam.pl
+
+# Discord/Slack Webhook URL for Telemetry Alerts
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder

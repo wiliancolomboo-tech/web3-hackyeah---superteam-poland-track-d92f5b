@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  vistula-sentinel-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vistula_sentinel_worker
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PROGRAM_ID=Vist111111111111111111111111111111111111111
+      - SOLANA_RPC_HTTP=https://api.devnet.solana.com
+      - SOLANA_RPC_WS=wss://api.devnet.solana.com
+      - RESEND_API_KEY=${RESEND_API_KEY:-placeholder}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - DEFAULT_ALERT_EMAIL=${DEFAULT_ALERT_EMAIL:-ops@vistula.io}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

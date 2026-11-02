@@ -1,0 +1,17 @@
+1/3 🌊 Net-30 invoice terms and paper dispute deadlocks cost EU cross-border businesses €12B+ annually in trapped liquidity. 
+
+At @HackYeah with @SuperteamPoland, we built #AmberFlow: The Enterprise Milestone Settlement Engine natively on @solana. 🦀⚡
+
+2/3 🛠️ Under the hood:
+• Multi-milestone SPL/EURC/USDC vaults via Anchor PDAs
+• SHA-256 deliverable proofs & 0.15% treasury rake
+• Autonomous dispute & timeout engine: review expires? Funds unlock instantly.
+• Turnkey @resend + Slack audit trails for MiCA compliance!
+
+3/3 🇵🇱 Built live in Kraków for HackYeah 2024. 
+Zero stubs. 100% test coverage. 1-click Docker orchestration. 
+
+Check out our open-source repo & live Devnet settlement stream 👇
+github.com/superteam-poland/amberflow-protocol
+
+#Solana #SuperteamPoland #HackYeah2024

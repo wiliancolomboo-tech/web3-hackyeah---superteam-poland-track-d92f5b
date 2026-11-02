@@ -1,0 +1,11 @@
+1/3 🚀 Excited to introduce KopernikPay for the @HackYeah Hackathon (@SuperteamPoland track)! 🇵🇱
+Cross-border enterprise invoicing in Europe is broken: 4-day SWIFT delays, 5% escrow middlemen, & disjointed ERP accounting. We built the fix on @solana. ⚡️
+
+2/3 KopernikPay enables zero-custody, sub-second B2B milestone payroll in native EURC & USDC. 
+✅ Fully non-custodial Anchor escrow PDAs
+✅ Timeout & auto-settlement guarantees
+✅ Real-time Dual-Rail Relays: automated @resend receipts & instant @Slack enterprise audit logs
+
+3/3 Solana brings institutional-grade speed and micro-cent execution to European tech treasuries. 
+Check out our open-source repo, 100% test matrix, and 1-click Dockerized keeper daemon! 🛠️🌐
+Tagging @SuperteamPoland @HackYeah @solana #Solana #SuperteamPoland #HackYeah2024

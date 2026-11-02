@@ -1,0 +1,13 @@
+1/3 🌊 Thrilled to unveil AmberStream for the @HackYeah Superteam Poland Track (@SuperteamPoland)! 🇵🇱
+
+Cross-border enterprise payments usually mean 3-day delays & high custodial fees. 
+We built an institutional milestone escrow & dispute engine settling in 400ms on @Solana. ⚡️
+
+2/3 🔐 Powered by zero-custody PDA vaults with deterministic timelocks + real-time enterprise webhook integrations.
+Every milestone trigger dispatches legally verifiable audit logs & notifications via @resend and SecOps webhooks. Zero reentrancy. 100% Rust & Anchor.
+
+3/3 📦 Turnkey Docker containers, 100% test coverage, and enterprise telemetry ready for European commerce and B2B contracts. 
+
+Check out the architecture and deploy in 1-click:
+🔗 GitHub: https://github.com/superteam-poland/amberstream-core
+cc @SuperteamPoland @HackYeah #Solana #SuperteamPoland #HackYeah
