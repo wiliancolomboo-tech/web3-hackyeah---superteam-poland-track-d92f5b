@@ -1,6 +1,6 @@
 SOLANA_RPC_URL=https://api.devnet.solana.com
 PROGRAM_ID=Sentry1111111111111111111111111111111111111
-RESEND_API_KEY=re_live_prod_abc123456789
+RESEND_API_KEY=re_test_000000000000000000000000
 SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
 FINANCE_EMAIL=treasury@enterprise-sponsor.io
 CRANK_KEYPAIR_JSON=[142,32,18,91,220,...]

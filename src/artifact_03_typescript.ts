@@ -210,7 +210,7 @@ if (require.main === module) {
     rpcUrl: process.env.SOLANA_RPC_URL || "http://127.0.0.1:8899",
     wsUrl: process.env.SOLANA_WS_URL || "ws://127.0.0.1:8900",
     programId: process.env.PROGRAM_ID || "Vist111111111111111111111111111111111111111",
-    resendApiKey: process.env.RESEND_API_KEY || "re_test_dummy_key",
+    resendApiKey: process.env.RESEND_API_KEY || "re_test_000000000000000000000000",
     slackWebhookUrl: process.env.SLACK_WEBHOOK_URL || "https://api.example.com/webhooks/alerts/placeholder",
     healthcheckPort: parseInt(process.env.HEALTHCHECK_PORT || "8080", 10),
   };

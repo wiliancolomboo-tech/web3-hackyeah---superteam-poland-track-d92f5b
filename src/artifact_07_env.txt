@@ -1,7 +1,7 @@
 SOLANA_RPC_URL=https://api.devnet.solana.com
 SOLANA_WS_URL=wss://api.devnet.solana.com
 SOLVISTULA_PROGRAM_ID=Vist111111111111111111111111111111111111111
-RESEND_API_KEY=re_your_live_api_key_here
+RESEND_API_KEY=re_test_000000000000000000000000
 INVOICE_SENDER_EMAIL=billing@solvistula.io
 FINANCE_TEAM_EMAIL=treasury@superteam.pl
 ENTERPRISE_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder

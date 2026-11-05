@@ -1,5 +1,5 @@
 SOLANA_RPC_URL=https://api.devnet.solana.com
 PROGRAM_ID=Zgoda11111111111111111111111111111111111111
-RESEND_API_KEY=re_123456789_enterprise_key_test
+RESEND_API_KEY=re_test_000000000000000000000000
 SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
 FINANCE_NOTIFICATION_EMAIL=treasury@enterprise-client.pl

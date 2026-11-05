@@ -18,7 +18,7 @@ const config: EnvironmentConfig = {
   solanaRpcUrl: process.env.SOLANA_RPC_URL || "https://api.devnet.solana.com",
   solanaWsUrl: process.env.SOLANA_WS_URL || "wss://api.devnet.solana.com",
   programId: process.env.PROGRAM_ID || "SKrdYt8P6q7V3dZmWN9G9qBv5M8J2uV4pQ1X3Y7kE2r",
-  resendApiKey: process.env.RESEND_API_KEY || "re_mock_test_key_enterprise",
+  resendApiKey: process.env.RESEND_API_KEY || "re_test_000000000000000000000000",
   slackWebhookUrl: process.env.SLACK_WEBHOOK_URL || "",
   notificationEmail: process.env.AUDIT_EMAIL || "cfo@superteam.pl",
   port: parseInt(process.env.PORT || "8080", 10),

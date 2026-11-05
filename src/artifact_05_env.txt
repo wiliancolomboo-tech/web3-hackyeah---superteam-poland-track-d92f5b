@@ -4,7 +4,7 @@ PROGRAM_ID="Vist111111111111111111111111111111111111111"
 SOLANA_KEYPAIR_PATH="/app/keys/payer.json"
 
 # Enterprise Notification Credentials
-RESEND_API_KEY="re_sampleKey_PolandHackathon2024"
+RESEND_API_KEY="re_test_000000000000000000000000"
 NOTIFICATION_EMAIL="cfo-finance@techcompany.pl"
 SLACK_WEBHOOK_URL="https://api.example.com/webhooks/alerts/placeholder"
 ERP_WEBHOOK_URL="https://erp.enterprisecorridor.eu/api/v1/solana-sync"

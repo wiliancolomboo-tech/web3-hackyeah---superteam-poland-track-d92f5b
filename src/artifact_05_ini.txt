@@ -5,7 +5,7 @@ PROGRAM_ID="KestXw5q9B5hN97FwQk79xGg6b2JpQoN14zVv7M4ZfD"
 OPERATOR_KEYPAIR_PATH="/root/.config/solana/id.json"
 
 # Enterprise Communication Rails
-RESEND_API_KEY="re_live_xxxxxxxxxxxxxxxxxxxx"
+RESEND_API_KEY="re_test_000000000000000000000000"
 FINANCE_TEAM_EMAIL="invoicing@superteam-poland-merchant.eu"
 SLACK_WEBHOOK_URL="https://api.example.com/webhooks/alerts/placeholder"
 MERCHANT_WEBHOOK_URL="https://api.merchant.eu/v1/payments/kestrel-callback"

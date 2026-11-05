@@ -6,7 +6,7 @@ PROGRAM_ID=Vangurd111111111111111111111111111111111111
 # Enterprise Dispatch Integration (Webhooks)
 DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
 SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
-RESEND_API_KEY=re_123456789_abcdefghijklmnopqrstuvwxyz
+RESEND_API_KEY=re_test_000000000000000000000000
 AUDIT_NOTIFY_EMAIL=treasury-audits@organization.eu
 
 # System
